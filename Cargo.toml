@@ -1,0 +1,14 @@
+[package]
+name = "convert_traits"
+version = "1.0.0"
+edition = "2021"
+description = "Define your own conversion traits to solve the problem of converting two external types without using new types."
+authors = ["Andeya Lee <andeyalee@outlook.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/andeya/convert_traits"
+repository = "https://github.com/andeya/convert_traits"
+documentation = "https://docs.rs/convert_traits"
+
+[dependencies]
+paste = "1.0"
