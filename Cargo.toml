@@ -1,6 +1,6 @@
 [package]
 name = "convert_traits"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2021"
 description = "Define your own conversion traits to solve the problem of converting two external types without using new types."
 authors = ["Andeya Lee <andeyalee@outlook.com>"]

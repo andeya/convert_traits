@@ -2,9 +2,15 @@
 
 Define your own conversion traits to solve the problem of converting two external types without using new types.
 
+
 [![Crates.io](https://img.shields.io/crates/v/convert_traits)](https://crates.io/crates/convert_traits)
 [![Docs](https://shields.io/docsrs/convert_traits)](https://docs.rs/convert_traits)
 [![License](https://img.shields.io/crates/l/convert_traits)](https://github.com/andeya/convert_traits?tab=MIT-1-ov-file)
+
+
+> Generate a series of conversion traits with a specified prefix based on: [::std::convert::AsRef], [::std::convert::AsMut],
+[::std::convert::From], [::std::convert::Into], [::std::convert::TryFrom] and [::std::convert::TryInto].
+
 
 ## Install
 
@@ -26,7 +32,9 @@ convert_traits = "1"
 #[cfg(test)]
 #[allow(non_local_definitions)]
 mod tests {
-    use super::my_convert;
+    # extern crate convert_traits;
+
+    use convert_traits::my_convert;
 
     #[derive(Debug, PartialEq)]
     struct A(B);
