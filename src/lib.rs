@@ -102,6 +102,18 @@ pub use paste::paste;
 #[macro_export]
 macro_rules! my_convert {
     ($prefix:ident) => {
+        $crate::my_convert!($prefix, DISABLE_FROM_SELF);
+        $crate::paste! {
+            // Reflexive implementation for [<$prefix:camel From>] trait
+            impl<T> [<$prefix:camel From>]<T> for T {
+                #[inline(always)]
+                fn [<$prefix:snake _from>](value: T) -> T {
+                    value
+                }
+            }
+        }
+    };
+    ($prefix:ident, DISABLE_FROM_SELF) => {
         $crate::paste! {
             pub trait [<$prefix:camel AsRef>]<T: ?Sized> {
                 fn [<$prefix:snake _as_ref>](&self) -> &T;
@@ -159,15 +171,6 @@ macro_rules! my_convert {
                     U::[<$prefix:snake _from>](self)
                 }
             }
-
-            // Reflexive implementation for [<$prefix:camel From>] trait
-            impl<T> [<$prefix:camel From>]<T> for T {
-                #[inline(always)]
-                fn [<$prefix:snake _from>](value: T) -> T {
-                    value
-                }
-            }
-
 
             pub trait [<$prefix:camel TryFrom>]<T>: Sized {
                 type Error;
@@ -248,6 +251,10 @@ mod tests {
         }
         assert_eq!(A(B), A::a_bc_from(B));
         assert_eq!(A(B), B.a_bc_into());
+        assert_eq!(B, B.a_bc_into());
+        my_convert!(x, DISABLE_FROM_SELF);
+        // assert_eq!(B, B.x_into());
+        //                 ^^^^^^ the trait `XFrom<B>` is not implemented for `B`, which is required by `B: XInto<_>`
     }
     #[test]
     fn test_try_from_into() {
